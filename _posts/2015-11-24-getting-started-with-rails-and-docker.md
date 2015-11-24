@@ -121,6 +121,12 @@ The reason we need this is that `docker-machine` does not have a "foreground" op
 way we are using it is essentially a wrapper around `VBoxManage`, so `launchd` has no
 process to monitor.
 
+Tell `launchd` to load and start your process with:
+
+{% highlight bash %}
+$ launchctl load ~/Library/LaunchAgents/local.docker_machine.dev.plist
+{% endhighlight %}
+
 Finally, add this to your `.bashrc` or equivalent:
 
 {% highlight bash %}
