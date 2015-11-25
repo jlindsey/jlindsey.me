@@ -198,7 +198,7 @@ DATABASE_URL="postgres://docker_fun:password@$DOCKER_IP:5432/docker_fun"
 REDIS_URL="redis://$DOCKER_IP:6379"
 {% endhighlight %}
 
-And in your `config/database.yml' file, change the `development` environment config so it
+And in your `config/database.yml` file, change the `development` environment config so it
 looks like this:
 
 {% highlight yaml %}
