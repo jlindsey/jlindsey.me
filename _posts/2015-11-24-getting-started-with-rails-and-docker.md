@@ -142,9 +142,9 @@ we can make our new Rails project. Assuming you already have Rails installed, ju
 new project, specifying that we want to use pgsql instead of sqlite:
 
 {% highlight bash %}
-rails new docker_fun -d postgresql
-cd docker_fun
-bundle install
+$ rails new docker_fun -d postgresql
+$ cd docker_fun
+$ bundle install
 {% endhighlight %}
 
 After bundler is done, we need to make a file to configure [Docker
