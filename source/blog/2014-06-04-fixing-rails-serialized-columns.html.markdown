@@ -21,7 +21,7 @@ every time a model is initialialized or fetched, and after it's saved. It overri
 to rehash the current state of a deserialized object and check that against the stored hash, and considers the 
 attribute changed or not based on that.
 
-```ruby
+~~~ ruby
 # See: https://github.com/rails/rails/pull/15458
 
 module ProperSerializationSaving
@@ -77,7 +77,7 @@ module ProperSerializationSaving
       end
     end
 end
-```
+~~~
 
 There are, of course, some caveats with this. If you are storing very large or deeply-nested objects as 
 serialized data (especially if you have a high number of data reads and writes), this may introduce a 

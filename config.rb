@@ -4,6 +4,7 @@ require 'kramdown'
 set :markdown_engine, :kramdown
 set :markdown, fenced_code_blocks: true,
                smartypants: true
+activate :syntax
 
 ###
 # Page options, layouts, aliases and proxies
@@ -26,9 +27,8 @@ page '/*.txt', layout: false
 ###
 # Helpers
 ###
-
+#
 activate :blog do |blog|
-  activate :syntax
   blog.prefix = 'blog'
   blog.permalink = '{title}.html'
   blog.sources = '{year}-{month}-{day}-{title}.html'
