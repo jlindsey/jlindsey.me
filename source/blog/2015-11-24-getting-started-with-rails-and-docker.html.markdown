@@ -23,11 +23,12 @@ First up, if you're on OS X and not using [Homebrew](http://brew.sh), you're
 missing out on a lot. Homebrew is the real successor to MacPorts, and a great package
 manager in its own right. So go ahead and install it. Then install these packages:
 
-{% highlight bash %}
+```bash
 $ brew update
 $ brew install Caskroom/cask/virtualbox docker \
 	docker-compose docker-machine
-{% endhighlight %}
+```
+
 
 Yes, VirtualBox. Above is an article about Docker vs Vagrant (which uses VirtualBox as its
 hypervisor), but in actuality you're going to be running Docker in a VM on OS X no matter
@@ -52,9 +53,9 @@ behind-the-scenes.
 First, you'll need to create a new VM. You can replace `dev` with whatever you want your
 machine to be called:
 
-{% highlight bash %}
+```bash
 $ docker-machine create -d virtualbox dev
-{% endhighlight %}
+```
 
 I like to have that VM start when I login to my laptop so that I can put the shell init
 invocation in my shell rc without wrapping it in a bunch of cumbersome checks. The VM is
@@ -64,16 +65,19 @@ startup time, but you can skip this part if you don't want it to auto-start.
 Create a new [launch agent][2] at `~/Library/LaunchAgents/local.docker-machine.dev.plist`
 (again replacing `dev` with your custom name if necessary):
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
 		<key>Label</key>
 		<string>local.docker_machine.dev</string>
 		<key>ProgramArguments</key>
 		<array>
-			<string>/usr/local/bin/docker-machine-wrapper.sh</string>
+			<string>
+              /usr/local/bin/docker-machine-wrapper.sh
+            </string>
 			<!-- Change to your machine name -->
 			<string>dev</string>
 		</array>
@@ -84,16 +88,18 @@ Create a new [launch agent][2] at `~/Library/LaunchAgents/local.docker-machine.d
 		<key>EnvironmentVariables</key>
 		<dict>
 			<key>PATH</key>
-			<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+			<string>
+              /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+            </string>
 		</dict>
 	</dict>
 </plist>
-{% endhighlight %}
+```
 
 This will tell `launchd` (OS X's init program) to run that wrapper script at load, passing
 it the name of your machine, and keeping it alive if it dies. Here's the wrapper script:
 
-{% highlight bash %}
+```bash
 #!/bin/bash
 
 if [ -z "$1" ]; then
@@ -113,7 +119,7 @@ while true; do
 	[[ "$(docker-machine status $1)" == "Running" ]] || break
 	sleep 1
 done
-{% endhighlight %}
+```
 
 Put this script in `/usr/local/bin` and make sure it's executable.
 
@@ -123,15 +129,15 @@ process to monitor.
 
 Tell `launchd` to load and start your process with:
 
-{% highlight bash %}
+```bash
 $ launchctl load ~/Library/LaunchAgents/local.docker_machine.dev.plist
-{% endhighlight %}
+```
 
 Finally, add this to your `.bashrc` or equivalent:
 
-{% highlight bash %}
+```bash
 eval "$(docker-machine env dev)"
-{% endhighlight %}
+```
 
 Open a new shell or source your rc file, and running `docker version` should successfully
 return both client and server information.
@@ -141,11 +147,11 @@ Now that we have a running VM with Docker on it and are able to control it from 
 we can make our new Rails project. Assuming you already have Rails installed, just make a
 new project, specifying that we want to use pgsql instead of sqlite:
 
-{% highlight bash %}
+```bash
 $ rails new docker_fun -d postgresql
 $ cd docker_fun
 $ bundle install
-{% endhighlight %}
+```
 
 After bundler is done, we need to make a file to configure [Docker
 Compose](https://docs.docker.com/compose/). Formerly known as Fig, Docker compose is a
@@ -154,7 +160,7 @@ otherwise manage docker containers. You can create your own images from Dockerfi
 with this, but we're just going to use a couple stock Postgres and Redis images. The
 config file is simple YAML (and the link above has more details):
 
-{% highlight yaml %}
+```yaml
 ---
 db:
   image: "postgres:9.4"
@@ -170,7 +176,7 @@ redis:
   command: redis-server --appendonly yes
   ports:
     - "6379:6379"
-{% endhighlight %}
+```
 
 Put this in a file called `docker-compose.yml` in the Rails app root, and then run
 `docker-compose up -d`. You should see Docker download all the images it needs, then
@@ -186,26 +192,26 @@ To configure Rails for this, I use a gem called
 [dotenv](https://github.com/bkeepers/dotenv). This reads a `.env` file in the Rails root
 and sets environment variables from it. So add this to your Gemfile and re-bundle:
 
-{% highlight ruby %}
+```ruby
 gem "dotenv-rails"
-{% endhighlight %}
+```
 
 Then create a `.env` file with this:
 
-{% highlight bash %}
+```bash
 DOCKER_IP="$(docker-machine ip dev)"
 DATABASE_URL="postgres://docker_fun:password@$DOCKER_IP:5432/docker_fun"
 REDIS_URL="redis://$DOCKER_IP:6379"
-{% endhighlight %}
+```
 
 And in your `config/database.yml` file, change the `development` environment config so it
 looks like this:
 
-{% highlight yaml %}
+```yaml
 development:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-{% endhighlight %}
+```
 
 Nothing else should be needed for Redis, as the redis gem already checks for a `REDIS_URL`
 environment variable when you instantiate a new client.

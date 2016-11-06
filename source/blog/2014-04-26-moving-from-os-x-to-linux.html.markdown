@@ -1,9 +1,7 @@
 ---
 title: "Moving from OS X to Linux"
-tags:
-  - Linux
-  - OS X
-  - Vim
+date: 2014/04/26
+tags: Linux, OS X, Vim
 ---
 
 For more or less my entire career as a web dev (and then DevOps) I've been
@@ -136,11 +134,11 @@ on, but I mostly bring it to work because my iTunes library is on it.
 [6]: http://shopap.lenovo.com/au/en/laptops/thinkpad/x-series/x1-carbon/
 [7]: http://cdn.arstechnica.net/wp-content/uploads/2014/01/thinkpad-x1-carbon-keyboard.jpg
 [8]: http://xubuntu.org
-[9]: /img/moving-from-os-x-to-linux/workspace-with-two-terminals.png
+[9]: /images/moving-from-os-x-to-linux/workspace-with-two-terminals.png
 [10]: http://i3wm.org
 [11]: https://github.com/enkore/i3pystatus
 [12]: http://i3wm.org/docs/userguide.html#multi_monitor
 [13]: https://gist.github.com/jlindsey/11359017
-[14]: /img/moving-from-os-x-to-linux/workspace-with-vimperator.png
+[14]: /images/moving-from-os-x-to-linux/workspace-with-vimperator.png
 [15]: http://www.vimperator.org/vimperator
 [16]: https://gist.github.com/jlindsey/11359155

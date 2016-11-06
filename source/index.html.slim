@@ -1,0 +1,15 @@
+nav
+  header
+    h1 Josh Lindsey
+
+  ul
+    li: a(href="https://github.com/jlindsey") github
+    li: a(href="https://twitter.com/lesmothian") twitter
+    li: a(href="/projects.html") projects
+    li: a(href="/resume.html") résumé
+
+section#recent-posts
+  - blog.articles[0..5].each do |article|
+    article
+      h2: a(href="#{article.url}")= article.title
+      h3: time= article.date.strftime('%e %b %Y')

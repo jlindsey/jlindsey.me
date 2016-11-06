@@ -21,7 +21,63 @@ every time a model is initialialized or fetched, and after it's saved. It overri
 to rehash the current state of a deserialized object and check that against the stored hash, and considers the 
 attribute changed or not based on that.
 
-{% gist jlindsey/f42a6c091eaae90d7701 %}
+```ruby
+# See: https://github.com/rails/rails/pull/15458
+
+module ProperSerializationSaving
+  extend ActiveSupport::Concern
+
+  included do
+    # The check prevents the after_initialize hook to run
+    # again if the model is dup()'d.
+    after_initialize :store_serialized_attribute_hashes!,
+                     :unless => proc { |m| m.serialized_attribute_hashes.present? }
+    after_save :store_serialized_attribute_hashes!
+  
+    attr_accessor :serialized_attribute_hashes
+  end
+
+  def keys_for_partial_write
+    changed
+  end
+
+  def should_record_timestamps?
+    self.record_timestamps and (!partial_writes? or changed?)
+  end
+
+  def changed
+    base_changed = Array(super)
+    return (base_changed + changed_serialized_attributes).flatten
+  end
+
+  def changed?
+    !self.changed.empty?
+  end
+
+  def any_serialized_attributes_changed?
+    self.serialized_attribute_hashes.any? do |atr, hash|
+      self.__send__(atr.to_sym).hash != hash
+    end
+  end
+
+  def changed_serialized_attributes
+    csa = self.serialized_attribute_hashes.map do |atr, hash|
+      atr if self.__send__(atr.to_sym).hash != hash 
+    end
+
+    csa.compact
+  end
+
+  protected
+    def store_serialized_attribute_hashes!
+      self.serialized_attribute_hashes ||= {}
+      self.class.serialized_attributes.keys.each do |atr|
+        frozen = self.__send__(atr.to_sym).hash.freeze
+        self.serialized_attribute_hashes[atr] = frozen
+      end
+    end
+end
+```
 
 There are, of course, some caveats with this. If you are storing very large or deeply-nested objects as 
 serialized data (especially if you have a high number of data reads and writes), this may introduce a 

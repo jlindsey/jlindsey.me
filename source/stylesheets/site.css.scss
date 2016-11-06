@@ -1,0 +1,105 @@
+@charset "utf-8";
+@import "normalize";
+
+html {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+body {
+    color: #515151;
+    background-color: #fff;
+}
+
+h1 {
+    font-family: 'Taviraj', serif;
+    font-size: 1.3em;
+}
+
+a {
+    text-decoration: none;
+    color: #65998D;
+
+    &:visited {
+        color: inherit;
+    }
+}
+
+img.img-thumbnail {
+    max-width: 55vw;
+}
+
+.back-home > a {
+    font-family: 'Taviraj', serif;
+    font-weight: bold;
+    &:before {
+        content: "«";
+    }
+}
+
+#container {
+    width: 55vw;
+    margin: 2em auto;
+}
+
+nav {
+    header > h1 {
+        font-size: 4em;
+        margin: 15vh 0 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline;
+            margin: 0.6em;
+
+            a {
+                color: #ABC;
+                font-size: 1.3em;
+
+                &:visited {
+                    color: #ABC;
+                }
+
+                &:hover {
+                    color: #AAA;
+                }
+            }
+        }
+    }
+}
+
+section#recent-posts {
+    margin-top: 25px;
+
+    article {
+        margin: 0;
+        font-size: 1em;
+
+        >h2 {
+            margin: 15px 0 0 0;
+            a {
+                color: black;
+
+                &:hover {
+                    color: #AAA;
+                }
+            }
+        }
+        >h3 {
+            margin: 0;
+            font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #515151;
+            font-size: 0.80em;
+            font-weight: 300;
+            line-height: 1.6;
+            text-transform: uppercase;
+        }
+    }
+}
+
