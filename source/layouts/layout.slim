@@ -9,8 +9,7 @@ html
     link href="//fonts.googleapis.com/css?family=Taviraj|Work+Sans|Source+Sans+Pro:300,300i,600" rel="stylesheet"
 
     = stylesheet_link_tag :site
-    = javascript_include_tag :all
 
-  body class="#{page_classes}"
-    #container= yield
+  body
+    #container class="#{page_classes}"= yield
 

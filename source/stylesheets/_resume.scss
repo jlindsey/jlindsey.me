@@ -1,0 +1,65 @@
+.resume {
+    section {
+        border-bottom: 2px inset #ABC;
+        padding-bottom: 25px;
+
+        details {
+            summary {
+                outline: none;
+                cursor: pointer;
+
+                h2, h3, h4, h5 {
+                    margin: 0;
+                    display: inline-block;
+                }
+            }
+
+            .flex-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+        }
+
+        &.preface {
+            header {
+                > h1 {
+                    font-size: 2rem;
+                    margin-bottom: 0;
+                }
+
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        display: inline;
+                        margin: 0 10px;
+                    }
+                }
+            }
+        }
+
+        &.experience {
+            h3.position {
+                small {
+                    &:before {
+                        content: " — ";
+                    }
+
+                    time {
+                        &:before {
+                            content: "⟨";
+                        }
+
+                        &:after {
+                            content: "⟩";
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

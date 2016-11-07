@@ -1,0 +1,30 @@
+nav {
+    header > h1 {
+        font-size: 4em;
+        margin: 15vh 0 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline;
+            margin: 0.6em;
+
+            a {
+                color: #ABC;
+                font-size: 1.3em;
+
+                &:visited {
+                    color: #ABC;
+                }
+
+                &:hover {
+                    color: #AAA;
+                }
+            }
+        }
+    }
+}
