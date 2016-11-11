@@ -5,9 +5,19 @@ img.img-thumbnail {
 .back-home > a {
     font-family: 'Taviraj', serif;
     font-weight: bold;
+    color: #515151;
+
+    &:visited {
+        color: #515151;
+    }
+
     &:before {
         content: "«";
     }
+}
+
+.footnotes {
+    font-size: 0.7rem;
 }
 
 section#recent-posts {

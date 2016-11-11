@@ -25,7 +25,11 @@ a {
     color: #65998D;
 
     &:visited {
-        color: inherit;
+        color: #65998D;
+    }
+
+    &:hover {
+        opacity: 0.7;
     }
 }
 
