@@ -9,7 +9,7 @@ nav
     li: a(href="/resume.html") résumé
 
 section#recent-posts
-  - blog.articles[0..5].each do |article|
+  - blog.articles.reject { |a| a.tags.map(&:downcase).include? 'personal' }[0..5].each do |article|
     article
       h2: a(href="#{article.url}")= article.title
       h3: time= article.date.strftime('%e %b %Y')
